@@ -7,6 +7,7 @@ using PatternRecognition.FingerprintRecognition.FeatureExtractors;
 using PracaMagisterska_v2.Orientation;
 using PracaMagisterska_v2.Utils;
 using Accord.Imaging.Filters;
+using PracaMagisterska_v2.Frequency;
 
 namespace PracaMagisterska_v2
 {
@@ -35,13 +36,16 @@ namespace PracaMagisterska_v2
 			Bitmap input = new Bitmap((Image)pictureBox1.Image.Clone());
 			Grayscale grayscaleFilter = new Grayscale(0.2125, 0.7154, 0.0721);
 			var features = new HongOrientationEstimation();
+			var freq = new HongFrequencyEstimation();
 			if (textBox2 == null) return;
 			features.BlockSize = Convert.ToByte(int.Parse(textBox2.Text));
+			freq.BlockSize = Convert.ToByte(int.Parse(textBox2.Text));
 			Median medianFilter = new Median(4);
 			input = grayscaleFilter.Apply(input);
 			input = medianFilter.Apply(input);
 
 			var orientaions = features.ExtractFeatures(input);
+			var frequencies = freq.ExtractFeatures(input,orientaions);
 			// Create a new Gabor filter
 			GaborFilter filter = new GaborFilter();
 			if (textBox3.Text == null) return;
@@ -49,7 +53,8 @@ namespace PracaMagisterska_v2
 			if (textBox1.Text == null) return;
 			if (textBox4.Text == null) return;
 			filter.Size = int.Parse(textBox1.Text);
-			input = (Bitmap) GaborApplier.Apply(input, orientaions, float.Parse(textBox4.Text), float.Parse(textBox3.Text), int.Parse(textBox1.Text));
+			input = (Bitmap) GaborApplier.Apply(input, orientaions, frequencies,
+				float.Parse(textBox4.Text), float.Parse(textBox3.Text), int.Parse(textBox1.Text));
 			pictureBox2.Image = input;
 		}
 

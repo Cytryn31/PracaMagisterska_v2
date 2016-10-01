@@ -53,7 +53,8 @@ namespace PracaMagisterska_v2
 			}
 			return kernel;
 		}
-		public static Image Apply(Image matrix, OrientationImage orientationImage, double gamma, double sigma, int ksize)
+		public static Image Apply(Image matrix, OrientationImage orientationImage,
+			 OrientationImage freqImage, double gamma, double sigma, int ksize)
 		{
 
 			ImageMatrix newImg = new ImageMatrix(new Bitmap(matrix));

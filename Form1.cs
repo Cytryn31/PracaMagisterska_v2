@@ -13,56 +13,53 @@ namespace PracaMagisterska_v2
 {
 	public partial class Form1 : Form
 	{
+		public static Form1 Instance;
 		public Form1()
 		{
+			Instance = this;
 			InitializeComponent();
 		}
 
 		private Image source;
+
 		private void button1_Click_1(object sender, EventArgs e)
 		{
-			pictureBox1.Image = ImageProcessingHelper.ResizeImage(pictureBox1.Image, pictureBox1.Height, pictureBox1.Width);
-			Graphics g = Graphics.FromImage(pictureBox1.Image);
-
+			ReferencePictureBox.Image = ImageProcessingHelper.ResizeImage(ReferencePictureBox.Image, ReferencePictureBox.Height, ReferencePictureBox.Width);
+			Graphics g = Graphics.FromImage(ReferencePictureBox.Image);
 			var features = new HongOrientationEstimation();
 			features.BlockSize = Convert.ToByte(int.Parse(textBox2.Text));
-			var orientaions = features.ExtractFeatures(new Bitmap(pictureBox1.Image));
+			var orientaions = features.ExtractFeatures(new Bitmap(ReferencePictureBox.Image));
 			OrientationImageDisplay.DrawLines(orientaions, g);
 		}
 
 		private void button2_Click_1(object sender, EventArgs e)
 		{
-			if (pictureBox1.Image == null) return;
-			Bitmap input = new Bitmap((Image)pictureBox1.Image.Clone());
-			Grayscale grayscaleFilter = new Grayscale(0.2125, 0.7154, 0.0721);
+			if (ReferencePictureBox.Image == null) return;
+			if (textBox1.Text == null) return;
+			if (textBox2.Text == null) return;
+			if (textBox3.Text == null) return;
+			if (textBox4.Text == null) return;
+			Bitmap input = new Bitmap((Image)ReferencePictureBox.Image.Clone());
+			
+			
 			var features = new HongOrientationEstimation();
 			var freq = new HongFrequencyEstimation();
-			if (textBox2 == null) return;
 			features.BlockSize = Convert.ToByte(int.Parse(textBox2.Text));
 			freq.BlockSize = Convert.ToByte(int.Parse(textBox2.Text));
-			Median medianFilter = new Median(4);
-			input = grayscaleFilter.Apply(input);
-			input = medianFilter.Apply(input);
-
 			var orientaions = features.ExtractFeatures(input);
-			var frequencies = freq.ExtractFeatures(input,orientaions);
-			// Create a new Gabor filter
-			GaborFilter filter = new GaborFilter();
-			if (textBox3.Text == null) return;
-			filter.Sigma = float.Parse(textBox3.Text);
-			if (textBox1.Text == null) return;
-			if (textBox4.Text == null) return;
-			filter.Size = int.Parse(textBox1.Text);
-			input = (Bitmap) GaborApplier.Apply(input, orientaions, frequencies,
+			var frequencies = freq.ExtractFeatures(input, orientaions);
+
+			input = (Bitmap)GaborApplier.Apply(input, orientaions, frequencies,
 				float.Parse(textBox4.Text), float.Parse(textBox3.Text), int.Parse(textBox1.Text));
-			pictureBox2.Image = input;
+			CalculatedPictureBox.Image = input;
 		}
 
 		private void loadPictureButton_Click(object sender, EventArgs e)
 		{
+			Grayscale grayscaleFilter = new Grayscale(0.2125, 0.7154, 0.0721);
 			try
 			{
-				var pictureBox = pictureBox1;
+				var pictureBox = ReferencePictureBox;
 				// Wrap the creation of the OpenFileDialog instance in a using statement,
 				// rather than manually calling the Dispose method to ensure proper disposal
 				using (var dlg = new OpenFileDialog())
@@ -71,7 +68,8 @@ namespace PracaMagisterska_v2
 					{
 						var img = FromFile(dlg.FileName);
 						img = ImageProcessingHelper.ResizeImage(img, pictureBox.Height, pictureBox.Width);
-						pictureBox1.Image = img;
+						img = grayscaleFilter.Apply(new Bitmap(img));
+						ReferencePictureBox.Image = img;
 						pictureBox.Image = (Image)img.Clone();
 						source = (Image)img.Clone();
 					}
@@ -84,9 +82,9 @@ namespace PracaMagisterska_v2
 
 		private void loadPicture2Button_Click(object sender, EventArgs e)
 		{
-			try
+			Grayscale grayscaleFilter = new Grayscale(0.2125, 0.7154, 0.0721); try
 			{
-				var pictureBox = pictureBox2;
+				var pictureBox = CalculatedPictureBox;
 				// Wrap the creation of the OpenFileDialog instance in a using statement,
 				// rather than manually calling the Dispose method to ensure proper disposal
 				using (var dlg = new OpenFileDialog())
@@ -95,6 +93,7 @@ namespace PracaMagisterska_v2
 					{
 						var img = FromFile(dlg.FileName);
 						img = ImageProcessingHelper.ResizeImage(img, pictureBox.Height, pictureBox.Width);
+						img = grayscaleFilter.Apply(new Bitmap(img));
 						pictureBox.Image = img;
 						pictureBox.Image = (Image)img.Clone();
 					}
@@ -107,7 +106,7 @@ namespace PracaMagisterska_v2
 
 		private void savePictureButton_Click(object sender, EventArgs e)
 		{
-			if (pictureBox2.Image == null) return;
+			if (CalculatedPictureBox.Image == null) return;
 			try
 			{
 				var sfd = new SaveFileDialog();
@@ -125,7 +124,7 @@ namespace PracaMagisterska_v2
 							format = ImageFormat.Bmp;
 							break;
 					}
-					pictureBox1.Image.Save(sfd.FileName, format);
+					ReferencePictureBox.Image.Save(sfd.FileName, format);
 				}
 			}
 			catch (Exception exception)
@@ -141,27 +140,17 @@ namespace PracaMagisterska_v2
 			return img;
 		}
 
-		private void button4_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void button5_Click(object sender, EventArgs e)
-		{
-
-		}
-
 		private void button6_Click(object sender, EventArgs e)
 		{
-			pictureBox1.Image = (Image)pictureBox2.Image.Clone();
-			source = (Image)pictureBox2.Image.Clone();
-			pictureBox2.Image = null;
+			ReferencePictureBox.Image = (Image)CalculatedPictureBox.Image.Clone();
+			source = (Image)CalculatedPictureBox.Image.Clone();
+			CalculatedPictureBox.Image = null;
 		}
 
 		private void button7_Click(object sender, EventArgs e)
 		{
 			if (source == null) return;
-			pictureBox1.Image = (Image)source.Clone();
+			ReferencePictureBox.Image = (Image)source.Clone();
 		}
 	}
 }

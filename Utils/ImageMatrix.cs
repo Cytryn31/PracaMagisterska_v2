@@ -36,7 +36,7 @@ namespace PracaMagisterska_v2.Utils
 			System.IntPtr scan0 = bmData.Scan0;
 			Height = bmp.Height;
 			Width = bmp.Width;
-			pixels = new int[bmp.Height, bmp.Width];
+			Pixels = new int[bmp.Height, bmp.Width];
 			unsafe
 			{
 				byte* p = (byte*)(void*)scan0;
@@ -53,7 +53,7 @@ namespace PracaMagisterska_v2.Utils
 						green = p[1];
 						red = p[2];
 
-						pixels[y, x] = (byte)(.299 * red
+						Pixels[y, x] = (byte)(.299 * red
 							+ .587 * green
 							+ .114 * blue);
 
@@ -79,7 +79,7 @@ namespace PracaMagisterska_v2.Utils
 		{
 			Height = height;
 			Width = width;
-			pixels = new int[height, width];
+			Pixels = new int[height, width];
 		}
 
 		/// <summary>
@@ -96,8 +96,8 @@ namespace PracaMagisterska_v2.Utils
 		/// </returns>
 		public int this[int row, int column]
 		{
-			get { return pixels[row, column]; }
-			set { pixels[row, column] = value; }
+			get { return Pixels[row, column]; }
+			set { Pixels[row, column] = value; }
 		}
 
 		/// <summary>
@@ -133,7 +133,7 @@ namespace PracaMagisterska_v2.Utils
 				{
 					for (int x = 0; x < Width; ++x)
 					{
-						p[0] = p[1] = p[2] = (byte)(pixels[y, x] < 0 ? 0 : pixels[y, x] > 255 ? 255 : pixels[y, x]);
+						p[0] = p[1] = p[2] = (byte)(Pixels[y, x] < 0 ? 0 : Pixels[y, x] > 255 ? 255 : Pixels[y, x]);
 						p += 3;
 					}
 					p += nOffset;
@@ -148,7 +148,7 @@ namespace PracaMagisterska_v2.Utils
 
 		#region private
 
-		private int[,] pixels;
+		public int[,] Pixels { get; }
 
 		#endregion
 	}

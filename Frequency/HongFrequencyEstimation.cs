@@ -25,9 +25,9 @@ namespace PracaMagisterska_v2.Frequency
 		/// </summary>
 		/// <param name="image">The source bitmap image to extract features from.</param>
 		/// <returns>The features extracted from the specified bitmap image.</returns>
-		public OrientationImage ExtractFeatures(Bitmap image,OrientationImage orientationImage)
+		public OrientationImage ExtractFeatures(Bitmap image, OrientationImage orientationImage)
 		{
-			var windowSize = BlockSize*2;
+			var windowSize = BlockSize * 2;
 			ImageMatrix matrix = new ImageMatrix(image);
 			byte width = Convert.ToByte(image.Width / BlockSize);
 			byte height = Convert.ToByte(image.Height / BlockSize);
@@ -36,29 +36,96 @@ namespace PracaMagisterska_v2.Frequency
 				for (int col = 0; col < width; col++)
 				{
 					var angle = orientationImage.IsNullBlock(row, col) ? 0 : orientationImage.AngleInRadians(row, col);
-					List<double> XSignature = new List<double>();
+					List<int> XSignature = new List<int>();
 					int x, y;
 					orientationImage.GetPixelCoordFromBlock(row, col, out x, out y);
 					var nVal = 0;
 
-					for (int k = 0; k < BlockSize; k++)
+					for (int k = 0; k < windowSize; k++)
 					{
 						var sum = 0.0;
-						for (int d = 0; d < windowSize; d++)
+						for (int d = 0; d < BlockSize; d++)
 						{
-							var u = x + (d - 0.5*BlockSize)*Math.Cos(angle) + (k - 0.5*windowSize)*Math.Sin(angle);
+							var u = x + (d - 0.5 * BlockSize) * Math.Cos(angle) + (k - 0.5 * windowSize) * Math.Sin(angle);
 
-							var v = y + (d - 0.5*BlockSize)* Math.Sin(angle) + (0.5 - windowSize)*Math.Cos(angle);
+							var v = y + (d - 0.5 * BlockSize) * Math.Sin(angle) + (0.5 * windowSize - k) * Math.Cos(angle);
+							if (!(u < 0) && !(v < 0) && !(u >= matrix.Height) && !(v >= matrix.Width))
+							{
+								sum += matrix[(int)u, (int)v];
+								nVal++;
+							}
 
-							sum += matrix[ (int) u, (int)v];
-							nVal++;
 						}
-						XSignature.Add(sum);
+						XSignature.Add((int)sum);
 					}
-//					oi[row, col] = Convert.ToByte(Math.Round(sum/ nVal));
+
+					var peaks = FindPeakElementRecursion(XSignature.ToArray(), 5);
+					var peaksLength = peaks.Count;
+					if (peaksLength > 1)
+					{
+						var dist = Math.Abs(peaks[0] - peaks[peaksLength - 1]);
+						oi[row, col] = Convert.ToByte(Math.Round((double)(dist / (peaksLength - 1))));
+					}
+					else
+					{
+						oi[row, col] = Convert.ToByte(Math.Round((double)(0)));
+					}
+					//					var divider = (double) (BlockSize*windowSize*255);
+					//					var sumD = (double)XSignature.Sum();
+					//					double value = sumD == 0 ? 0: (sumD/divider);
+					//					oi[row, col] = Convert.ToByte(value);
 				}
 			return oi;
 		}
+
+		private static List<int> FindPeakElementRecursion(int[] num, double delta)
+		{
+			List<int> maxtab = new List<int>();
+			List<int> mintab = new List<int>();
+
+			int mn = int.MaxValue;
+			int mx = int.MinValue;
+			int mxPos = 0;
+			int mnPos = 0;
+
+			bool lookformax = true;
+			for (int i = 0; i < num.Length; i++)
+			{
+				var value = num[i];
+				if (value > mx)
+				{
+					mx = value;
+					mxPos = i;
+				}
+
+				if (value < mn)
+				{
+					mn = value;
+					mnPos = i;
+				}
+
+				if (lookformax)
+				{
+					if (value < mx - delta)
+					{
+						maxtab.Add(mxPos);
+						mn = value;
+						lookformax = false;
+					}
+				}
+				else
+				{
+					if (value > mn + delta)
+					{
+						mintab.Add(mnPos);
+						mx = value;
+						lookformax = true;
+					}
+				}
+			}
+			return mintab;
+		}
+
 		private byte bSize;
 	}
 }

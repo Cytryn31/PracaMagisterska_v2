@@ -6,7 +6,7 @@
 
 using System;
 
-namespace PatternRecognition.FingerprintRecognition.Core
+namespace PracaMagisterska_v2
 {
 	/// <summary>
 	///     Represents the type of the minutia.
@@ -47,7 +47,7 @@ namespace PatternRecognition.FingerprintRecognition.Core
 		///     Initializes a new instance of the <see cref="Minutia"/> class using the specified location and angle.
 		/// </summary>
 		/// <remarks>
-		///     The default value of <see cref="MinutiaType"/> is <see cref="Core.MinutiaType.Unknown"/>.
+		///     The default value of <see cref="MinutiaType"/> is <see cref="PracaMagisterska_v2.MinutiaType.Unknown"/>.
 		/// </remarks>
 		/// <param name="x">
 		///     The horizontal position of the minutia.

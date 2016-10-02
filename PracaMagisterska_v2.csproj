@@ -108,6 +108,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CustomPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\NormalizationForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -123,8 +126,12 @@
     <Compile Include="ImageProcessing\IterativeThresholding.cs" />
     <Compile Include="ImageProcessing\OtsuThresholding.cs" />
     <Compile Include="ImageProcessing\SISThresholding.cs" />
+    <Compile Include="ImageProcessing\ZhangSuen.cs" />
     <Compile Include="Minutia.cs" />
+    <Compile Include="MinutiaContainer.cs" />
+    <Compile Include="MinutiaExtractor.cs" />
     <Compile Include="Orientation\HongOrientationEstimator.cs" />
+    <Compile Include="Orientation\MinutiaImageDisplay.cs" />
     <Compile Include="Orientation\OrientationImage.cs" />
     <Compile Include="Orientation\OrientationImageDisplay.cs" />
     <Compile Include="Program.cs" />

@@ -33,7 +33,42 @@ namespace PracaMagisterska_v2
 			return (int)result;
 		}
 
-		public static Image Apply(Image matrix, OrientationImage orientationImage,
+		public static Image ApplyBank(Image matrix, double gamma, double sigma, int ksize)
+		{
+
+			ImageMatrix newImg = new ImageMatrix(new Bitmap(matrix));
+			try
+			{
+				for (int row = 0; row < orientationImage.Height; row++)
+				{
+					for (int col = 0; col < orientationImage.Width; col++)
+					{
+						int x, y;
+						var angle = orientationImage.IsNullBlock(row, col) ? 0 : orientationImage.AngleInRadians(row, col);
+						var freq = freqImage[row, col];
+						orientationImage.GetPixelCoordFromBlock(row, col, out x, out y);
+						int maxLength = orientationImage.WindowSize / 2;
+						var kernel = Gabor.Kernel2D(ksize, (20), angle, 1, sigma, gamma, false);
+
+						for (int xi = x - maxLength; xi < x + maxLength; xi++)
+						{
+							for (int yi = y - maxLength; yi < y + maxLength; yi++)
+							{
+								newImg[yi, xi] = apply_kernel_at(newImg, kernel, xi, yi);
+							}
+						}
+
+					}
+				}
+			}
+			catch (Exception exception)
+			{
+				return newImg.ToBitmap();
+			}
+			return newImg.ToBitmap();
+		}
+
+		public static Image ApplyHong(Image matrix, OrientationImage orientationImage,
 			 OrientationImage freqImage, double gamma, double sigma, int ksize)
 		{
 
@@ -67,33 +102,6 @@ namespace PracaMagisterska_v2
 				return newImg.ToBitmap();
 			}
 			return newImg.ToBitmap();
-		}
-
-		public static int[] GetArgbValues(Color c)
-		{
-			int[] Argb = { (int)c.R, (int)c.G, (int)c.B };
-			return Argb;
-		}
-
-		public static Image RepleaceArea(Image fragment, Image refImage, Rectangle cropArea)
-		{
-			Bitmap bmpRef = new Bitmap(refImage);
-			Bitmap bmpFrag = new Bitmap(fragment);
-			for (int i = 0; i < cropArea.Height; i++)
-			{
-				for (int j = 0; j < cropArea.Width; j++)
-				{
-					bmpRef.SetPixel(cropArea.Y + i, cropArea.X + j, bmpFrag.GetPixel(i, j));
-				}
-			}
-			return bmpRef;
-		}
-
-		public static GaborFilter ReconfGabor(GaborFilter gaborFilter, double theta, double lambda)
-		{
-			gaborFilter.Theta = theta;
-			gaborFilter.Lambda = lambda;
-			return gaborFilter;
 		}
 	}
 }

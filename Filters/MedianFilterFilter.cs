@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PracaMagisterska_v2.Filters
 {
@@ -38,7 +35,7 @@ namespace PracaMagisterska_v2.Filters
 			sourceBitmap.UnlockBits(sourceData);
 
 
-			if (grayscale == true)
+			if (grayscale)
 			{
 				float rgb = 0;
 

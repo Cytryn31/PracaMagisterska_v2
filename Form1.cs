@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
-using PatternRecognition.FingerprintRecognition.FeatureExtractors;
-using PracaMagisterska_v2.Orientation;
-using PracaMagisterska_v2.Utils;
 using Accord.Imaging.Filters;
+using PatternRecognition.FingerprintRecognition.FeatureExtractors;
 using PracaMagisterska_v2.Frequency;
 using PracaMagisterska_v2.ImageProcessing;
+using PracaMagisterska_v2.Orientation;
+using PracaMagisterska_v2.Utils;
 
 namespace PracaMagisterska_v2
 {
@@ -69,7 +68,7 @@ namespace PracaMagisterska_v2
 			Bitmap input = new Bitmap((Image)ReferencePictureBox.Image.Clone());
 
 
-			if (comboBox1.SelectedText.Equals("LHong"))
+			if (comboBox1.Text.Equals("LHong"))
 			{
 				var orientation = new HongOrientationEstimation();
 				var freq = new HongFrequencyEstimation();
@@ -78,12 +77,14 @@ namespace PracaMagisterska_v2
 				var orientaions = orientation.ExtractFeatures(input);
 				var frequencies = freq.ExtractFeatures(input, orientaions);
 
-				input = (Bitmap)GaborApplier.Apply(input, orientaions, frequencies,
-					(double)decimal.Parse(textBox4.Text), (double)decimal.Parse(textBox3.Text), int.Parse(textBox1.Text));
+				input = (Bitmap)GaborApplier.ApplyHong(input, orientaions, frequencies,
+					float.Parse(textBox4.Text), float.Parse(textBox3.Text), int.Parse(textBox1.Text));
 			}
-			else if (comboBox1.SelectedText.Equals("FilterBank"))
+			else if (comboBox1.Text.Equals("FilterBank"))
 			{
-				
+				input = (Bitmap)GaborApplier.ApplyBank(input,
+					float.Parse(textBox4.Text), float.Parse(textBox3.Text), int.Parse(textBox1.Text));
+
 			}
 			CalculatedPictureBox.Image = input;
 		}
@@ -188,11 +189,11 @@ namespace PracaMagisterska_v2
 
 		private void button8_Click(object sender, EventArgs e)
 		{
-			if (Form1.Instance.ReferencePictureBox.Image != null)
+			if (Instance.ReferencePictureBox.Image != null)
 			{
-				bool[][] result = ImageProcessingHelper.Image2Bool(Form1.Instance.ReferencePictureBox.Image);
+				bool[][] result = ImageProcessingHelper.Image2Bool(Instance.ReferencePictureBox.Image);
 				result = ZhangSuen.ZhangSuenThinning(result);
-				Form1.Instance.CalculatedPictureBox.Image = ImageProcessingHelper.Bool2Image(result);
+				Instance.CalculatedPictureBox.Image = ImageProcessingHelper.Bool2Image(result);
 			}
 		}
 

@@ -26,8 +26,8 @@ namespace PracaMagisterska_v2
 		/// <summary>
 		///     Represents a ridge bifurcation.
 		/// </summary>
-		Bifurcation,
-	};
+		Bifurcation
+	}
 
 	/// <summary>
 	///     Represents a minutia.

@@ -4,6 +4,7 @@
  * Comments by: Miguel Angel Medina Pérez (miguel.medina.perez@gmail.com)
  */
 
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 
@@ -33,7 +34,7 @@ namespace PracaMagisterska_v2.Utils
 			BitmapData bmData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
 				ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 			int stride = bmData.Stride;
-			System.IntPtr scan0 = bmData.Scan0;
+			IntPtr scan0 = bmData.Scan0;
 			Height = bmp.Height;
 			Width = bmp.Width;
 			Pixels = new int[bmp.Height, bmp.Width];
@@ -123,7 +124,7 @@ namespace PracaMagisterska_v2.Utils
 			BitmapData bmData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
 				ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 			int stride = bmData.Stride;
-			System.IntPtr scan0 = bmData.Scan0;
+			IntPtr scan0 = bmData.Scan0;
 
 			unsafe
 			{

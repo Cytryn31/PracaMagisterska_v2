@@ -1,4 +1,6 @@
-﻿using PracaMagisterska_v2.Forms;
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+using PracaMagisterska_v2.Forms;
 
 namespace PracaMagisterska_v2
 {
@@ -7,7 +9,7 @@ namespace PracaMagisterska_v2
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components = null;
 
 		/// <summary>
 		/// Clean up any resources being used.
@@ -30,6 +32,7 @@ namespace PracaMagisterska_v2
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.Gabor = new System.Windows.Forms.TabPage();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.button9 = new System.Windows.Forms.Button();
@@ -50,10 +53,6 @@ namespace PracaMagisterska_v2
 			this.textBox6 = new System.Windows.Forms.TextBox();
 			this.label9 = new System.Windows.Forms.Label();
 			this.textBox7 = new System.Windows.Forms.TextBox();
-			this.thresholdingSelector1 = new PracaMagisterska_v2.ThresholdingSelector();
-			this.normalizationForm1 = new PracaMagisterska_v2.Forms.NormalizationForm();
-			this.CalculatedPictureBox = new PracaMagisterska_v2.Forms.CustomPictureBox();
-			this.ReferencePictureBox = new PracaMagisterska_v2.Forms.CustomPictureBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.textBox3 = new System.Windows.Forms.TextBox();
 			this.textBox4 = new System.Windows.Forms.TextBox();
@@ -65,6 +64,10 @@ namespace PracaMagisterska_v2
 			this.button1 = new System.Windows.Forms.Button();
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.thresholdingSelector1 = new PracaMagisterska_v2.ThresholdingSelector();
+			this.normalizationForm1 = new PracaMagisterska_v2.Forms.NormalizationForm();
+			this.CalculatedPictureBox = new PracaMagisterska_v2.Forms.CustomPictureBox();
+			this.ReferencePictureBox = new PracaMagisterska_v2.Forms.CustomPictureBox();
 			this.Gabor.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -289,44 +292,6 @@ namespace PracaMagisterska_v2
 			this.textBox7.TabIndex = 7;
 			this.textBox7.Text = "15";
 			// 
-			// thresholdingSelector1
-			// 
-			this.thresholdingSelector1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.thresholdingSelector1.Location = new System.Drawing.Point(6, 296);
-			this.thresholdingSelector1.Name = "thresholdingSelector1";
-			this.thresholdingSelector1.Size = new System.Drawing.Size(225, 212);
-			this.thresholdingSelector1.TabIndex = 21;
-			// 
-			// normalizationForm1
-			// 
-			this.normalizationForm1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.normalizationForm1.Location = new System.Drawing.Point(6, 124);
-			this.normalizationForm1.Name = "normalizationForm1";
-			this.normalizationForm1.Size = new System.Drawing.Size(225, 166);
-			this.normalizationForm1.TabIndex = 20;
-			// 
-			// CalculatedPictureBox
-			// 
-			this.CalculatedPictureBox.BackColor = System.Drawing.Color.Black;
-			this.CalculatedPictureBox.Image = null;
-			this.CalculatedPictureBox.Location = new System.Drawing.Point(759, 44);
-			this.CalculatedPictureBox.Name = "CalculatedPictureBox";
-			this.CalculatedPictureBox.Size = new System.Drawing.Size(516, 672);
-			this.CalculatedPictureBox.TabIndex = 3;
-			this.CalculatedPictureBox.TabStop = false;
-			this.CalculatedPictureBox.ImageChanged += new System.EventHandler(this.calcImageChanged_Event);
-			// 
-			// ReferencePictureBox
-			// 
-			this.ReferencePictureBox.BackColor = System.Drawing.Color.Black;
-			this.ReferencePictureBox.Image = null;
-			this.ReferencePictureBox.Location = new System.Drawing.Point(237, 44);
-			this.ReferencePictureBox.Name = "ReferencePictureBox";
-			this.ReferencePictureBox.Size = new System.Drawing.Size(516, 672);
-			this.ReferencePictureBox.TabIndex = 2;
-			this.ReferencePictureBox.TabStop = false;
-			this.ReferencePictureBox.ImageChanged += new System.EventHandler(this.refImageChanged_Event);
-			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
@@ -433,14 +398,53 @@ namespace PracaMagisterska_v2
 			this.comboBox1.Size = new System.Drawing.Size(97, 21);
 			this.comboBox1.TabIndex = 26;
 			// 
+			// thresholdingSelector1
+			// 
+			this.thresholdingSelector1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.thresholdingSelector1.Location = new System.Drawing.Point(6, 296);
+			this.thresholdingSelector1.Name = "thresholdingSelector1";
+			this.thresholdingSelector1.Size = new System.Drawing.Size(225, 212);
+			this.thresholdingSelector1.TabIndex = 21;
+			// 
+			// normalizationForm1
+			// 
+			this.normalizationForm1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.normalizationForm1.Location = new System.Drawing.Point(6, 124);
+			this.normalizationForm1.Name = "normalizationForm1";
+			this.normalizationForm1.Size = new System.Drawing.Size(225, 166);
+			this.normalizationForm1.TabIndex = 20;
+			// 
+			// CalculatedPictureBox
+			// 
+			this.CalculatedPictureBox.BackColor = System.Drawing.Color.Black;
+			this.CalculatedPictureBox.Image = null;
+			this.CalculatedPictureBox.Location = new System.Drawing.Point(759, 44);
+			this.CalculatedPictureBox.Name = "CalculatedPictureBox";
+			this.CalculatedPictureBox.Size = new System.Drawing.Size(516, 672);
+			this.CalculatedPictureBox.TabIndex = 3;
+			this.CalculatedPictureBox.TabStop = false;
+			this.CalculatedPictureBox.ImageChanged += new System.EventHandler(this.calcImageChanged_Event);
+			// 
+			// ReferencePictureBox
+			// 
+			this.ReferencePictureBox.BackColor = System.Drawing.Color.Black;
+			this.ReferencePictureBox.Image = null;
+			this.ReferencePictureBox.Location = new System.Drawing.Point(237, 44);
+			this.ReferencePictureBox.Name = "ReferencePictureBox";
+			this.ReferencePictureBox.Size = new System.Drawing.Size(516, 672);
+			this.ReferencePictureBox.TabIndex = 2;
+			this.ReferencePictureBox.TabStop = false;
+			this.ReferencePictureBox.ImageChanged += new System.EventHandler(this.refImageChanged_Event);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1309, 776);
 			this.Controls.Add(this.tabControl1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "Form1";
-			this.Text = "Form1";
+			this.Text = "GeTuP";
 			this.Gabor.ResumeLayout(false);
 			this.Gabor.PerformLayout();
 			this.panel2.ResumeLayout(false);
@@ -456,41 +460,41 @@ namespace PracaMagisterska_v2
 
 		#endregion
 
-		private System.Windows.Forms.TabPage Gabor;
-		private System.Windows.Forms.TabControl tabControl1;
-		private System.Windows.Forms.Button button3;
-		private System.Windows.Forms.Button button4;
-		private System.Windows.Forms.Button button5;
-		private System.Windows.Forms.Button button6;
-		private System.Windows.Forms.Button button7;
-		private Forms.NormalizationForm normalizationForm1;
+		private TabPage Gabor;
+		private TabControl tabControl1;
+		private Button button3;
+		private Button button4;
+		private Button button5;
+		private Button button6;
+		private Button button7;
+		private NormalizationForm normalizationForm1;
 		private ThresholdingSelector thresholdingSelector1;
-		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Button button8;
-		private System.Windows.Forms.Panel panel2;
-		private System.Windows.Forms.Button button9;
-		private System.Windows.Forms.Label label6;
+		private Panel panel1;
+		private Label label5;
+		private Button button8;
+		private Panel panel2;
+		private Button button9;
+		private Label label6;
 		public CustomPictureBox CalculatedPictureBox;
 		public CustomPictureBox ReferencePictureBox;
-		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.TextBox textBox7;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.TextBox textBox6;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.TextBox textBox5;
-		private System.Windows.Forms.CheckBox checkBox1;
-		private System.Windows.Forms.ComboBox comboBox1;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button1;
+		private Label label9;
+		private TextBox textBox7;
+		private Label label8;
+		private TextBox textBox6;
+		private Label label7;
+		private TextBox textBox5;
+		private CheckBox checkBox1;
+		private ComboBox comboBox1;
+		private Label label4;
+		private TextBox textBox4;
+		private Label label3;
+		private TextBox textBox3;
+		private Label label2;
+		private TextBox textBox2;
+		private Label label1;
+		private TextBox textBox1;
+		private Button button2;
+		private Button button1;
 	}
 }
 

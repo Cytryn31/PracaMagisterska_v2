@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Accord.Imaging.Filters;
-using PracaMagisterska_v2.ImageProcessing;
 using PracaMagisterska_v2.Filters;
+using PracaMagisterska_v2.ImageProcessing;
 
 namespace PracaMagisterska_v2.Forms
 {

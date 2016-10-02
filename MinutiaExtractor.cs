@@ -39,7 +39,7 @@ namespace PracaMagisterska_v2
 																   matrix[yi, xi - 1] == 255 ? 0 : 1,
 																   matrix[yi + 1, xi - 1] == 255 ? 0 : 1,
 																   matrix[yi + 1, xi] == 255 ? 0 : 1,
-																   matrix[yi + 1, xi + 1] == 255 ? 0 : 1,
+																   matrix[yi + 1, xi + 1] == 255 ? 0 : 1
 
 															   };
 
@@ -192,9 +192,9 @@ namespace PracaMagisterska_v2
 				if (treeNeighboors.Count < 3)
 					return double.NaN;
 
-				List<Point> n1 = new List<Point>() { new Point(x, y), treeNeighboors[0] };
-				List<Point> n2 = new List<Point>() { new Point(x, y), treeNeighboors[1] };
-				List<Point> n3 = new List<Point>() { new Point(x, y), treeNeighboors[2] };
+				List<Point> n1 = new List<Point> { new Point(x, y), treeNeighboors[0] };
+				List<Point> n2 = new List<Point> { new Point(x, y), treeNeighboors[1] };
+				List<Point> n3 = new List<Point> { new Point(x, y), treeNeighboors[2] };
 
 				for (int i = 0; i < 10; i++)
 				{

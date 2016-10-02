@@ -16,8 +16,8 @@ namespace PracaMagisterska_v2.Forms
 			set
 			{
 				base.Image = value;
-				if (this.ImageChanged != null)
-					this.ImageChanged(this, new EventArgs());
+				if (ImageChanged != null)
+					ImageChanged(this, new EventArgs());
 			}
 		}
 	}

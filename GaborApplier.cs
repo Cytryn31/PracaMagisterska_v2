@@ -32,11 +32,9 @@ namespace PracaMagisterska_v2
 			return (int)result;
 		}
 
-		public static Image ApplyBank(Image matrix, double gamma, double sigma, int ksize)
+		public static Image ApplyBestResponse(Image matrix, double gamma, double sigma, int ksize)
 		{
 			GC.Collect();
-
-
 			List<ImageMatrix> processedImages = new List<ImageMatrix>();
 			ImageMatrix acumm = new ImageMatrix(matrix.Width, matrix.Height);
 			try
@@ -91,7 +89,40 @@ namespace PracaMagisterska_v2
 						orientationImage.GetPixelCoordFromBlock(row, col, out x, out y);
 						int maxLength = orientationImage.WindowSize / 2;
 						var kernel = Gabor.Kernel2D(ksize, (20), angle, 1, sigma, gamma, false);
+						for (int xi = x - maxLength; xi < x + maxLength; xi++)
+						{
+							for (int yi = y - maxLength; yi < y + maxLength; yi++)
+							{
+								newImg[yi, xi] = apply_kernel_at(newImg, kernel, xi, yi);
+							}
+						}
+					}
+				}
+			}
+			catch (Exception exception)
+			{
+				return newImg.ToBitmap();
+			}
+			return newImg.ToBitmap();
+		}
 
+		public static Image ApplyBank(Image matrix, OrientationImage orientationImage,
+			OrientationImage freqImage, double gamma, double sigma, int ksize)
+		{
+			ImageMatrix newImg = new ImageMatrix(new Bitmap(matrix));
+			try
+			{
+				var kernels = BuildFiltersDictionary(gamma, sigma, ksize);
+				for (int row = 0; row < orientationImage.Height; row++)
+				{
+					for (int col = 0; col < orientationImage.Width; col++)
+					{
+						int x, y;
+						var angle = orientationImage.IsNullBlock(row, col) ? 0 : orientationImage.AngleInRadians(row, col);
+						var freq = freqImage[row, col];
+						orientationImage.GetPixelCoordFromBlock(row, col, out x, out y);
+						int maxLength = orientationImage.WindowSize / 2;
+						var kernel = FindKernel(20, angle, kernels);
 						for (int xi = x - maxLength; xi < x + maxLength; xi++)
 						{
 							for (int yi = y - maxLength; yi < y + maxLength; yi++)
@@ -114,7 +145,7 @@ namespace PracaMagisterska_v2
 			List<GaborFilter> kernels = new List<GaborFilter>();
 			for (int lambda = 5; lambda < 20; lambda += 5)
 			{
-				for (double theta = 0; theta < 2.8; theta += Math.PI / 8)
+				for (double theta = 0; theta < 3.14; theta += Math.PI / 8)
 				{
 					kernels.Add(new GaborFilter
 					{
@@ -127,6 +158,42 @@ namespace PracaMagisterska_v2
 				}
 			}
 			return kernels;
+		}
+
+		private static Dictionary<KeyValuePair<double, double>, double[,]> BuildFiltersDictionary(double gamma, double sigma, int ksize)
+		{
+			Dictionary<KeyValuePair<double, double>, double[,]> kernels =
+				new Dictionary<KeyValuePair<double, double>, double[,]>();
+			for (int lambda = 5; lambda < 20; lambda += 5)
+			{
+				for (double theta = 0; theta < 3.14; theta += Math.PI / 8)
+				{
+					var kernel = Gabor.Kernel2D(ksize, lambda, theta, 1, sigma, gamma, false);
+					kernels.Add(new KeyValuePair<double, double>(lambda,theta),kernel );
+				}
+			}
+			return kernels;
+		}
+
+		private static double[,] FindKernel(double lamda, double angle, Dictionary<KeyValuePair<double, double>, double[,]> kernels)
+		{
+			var tmpLamda = 0.0;
+			var tmpAngle = 0.0;
+			var prevDifrencce = 0.0;
+
+			for (int lambda = 5; lambda < 20; lambda += 5)
+			{
+				if (lambda >= lamda)
+					tmpLamda = prevDifrencce > Math.Abs(lambda - lamda) ? lambda : lambda - 5;
+					prevDifrencce = Math.Abs(lambda - lamda);
+			}
+			for (double theta = 0; theta < 3.14; theta += Math.PI / 8)
+			{
+				if (theta >= angle)
+					tmpAngle = prevDifrencce > Math.Abs(theta - angle) ? theta : theta - Math.PI / 8;
+				prevDifrencce = Math.Abs(theta - angle);
+			}
+			return kernels[new KeyValuePair<double, double>(tmpLamda, tmpAngle)];
 		}
 	}
 }

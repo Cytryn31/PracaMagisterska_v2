@@ -32,19 +32,19 @@ namespace PracaMagisterska_v2.Forms
 		private void InitializeComponent()
 		{
 			this.label1 = new System.Windows.Forms.Label();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.textBox1 = new  CustomTextBox();
+			this.textBox2 = new  CustomTextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.button1 = new System.Windows.Forms.Button();
 			this.label3 = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.label4 = new System.Windows.Forms.Label();
-			this.textBox3 = new System.Windows.Forms.TextBox();
+			this.textBox3 = new CustomTextBox();
 			this.button2 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.label5 = new System.Windows.Forms.Label();
-			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.textBox4 = new CustomTextBox();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.SuspendLayout();

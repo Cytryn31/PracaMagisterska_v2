@@ -6,7 +6,7 @@ namespace PracaMagisterska_v2.Orientation
 {
 	class MinutiaImageDisplay
 	{
-		public static void DrawMinutia(List<Minutia> minutiae, Graphics g)
+		public static void DrawMinutia(List<Minutia> minutiae, Graphics g, bool rect = false)
 		{
 			int lineLength = 8;
 			Pen greenPen = new Pen(Brushes.Green) { Width = 2 };
@@ -34,6 +34,10 @@ namespace PracaMagisterska_v2.Orientation
 				{
 					g.DrawEllipse(redPen, new Rectangle(minutia.X - 5, minutia.Y - 5, 10, 10));
 					g.DrawLine(bluePen, p0, p1);
+				}
+				if (rect)
+				{
+					g.DrawRectangle(new Pen(Color.Yellow,2), new Rectangle(minutia.X - 5, minutia.Y - 5, 10, 10));
 				}
 			}
 		}

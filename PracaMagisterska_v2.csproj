@@ -72,6 +72,10 @@
       <HintPath>..\packages\AForge.Math.2.2.5\lib\AForge.Math.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK.1.1.2225.0\lib\net20\OpenTK.dll</HintPath>
       <Private>True</Private>
@@ -111,6 +115,15 @@
     <Compile Include="Forms\CustomPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Forms\CustomTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\EvalWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EvalWindow.Designer.cs">
+      <DependentUpon>EvalWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\NormalizationForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -148,6 +161,9 @@
     <Compile Include="Utils\MatrixExtensions.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EvalWindow.resx">
+      <DependentUpon>EvalWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NormalizationForm.resx">
       <DependentUpon>NormalizationForm.cs</DependentUpon>

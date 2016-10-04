@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using Accord.Imaging.Filters;
+using Newtonsoft.Json;
 using PatternRecognition.FingerprintRecognition.FeatureExtractors;
+using PracaMagisterska_v2.Forms;
 using PracaMagisterska_v2.Frequency;
 using PracaMagisterska_v2.ImageProcessing;
 using PracaMagisterska_v2.Orientation;
@@ -20,7 +24,9 @@ namespace PracaMagisterska_v2
 			[Description("LHONG")]
 			LHong = 0,
 			[Description("FilterBank")]
-			FilterBank = 1
+			FilterBank = 1,
+			[Description("BestResponse")]
+			BestResponse = 2
 		}
 		public static Form1 Instance;
 
@@ -34,11 +40,22 @@ namespace PracaMagisterska_v2
 
 		private void refImageChanged_Event(object sender, EventArgs e)
 		{
-			sourceReferenceImage = (Image)ReferencePictureBox.Image.Clone();
+			textBox8.Text = "0";
+			textBox9.Text = "0";
+			if (!_lockSwapingRefImage)
+			{
+				sourceReferenceImage = (Image)ReferencePictureBox.Image.Clone();
+			}
+			else
+			{
+				_lockSwapingRefImage = false;
+			}
 		}
 
 		private void calcImageChanged_Event(object sender, EventArgs e)
 		{
+			textBox10.Text = "0";
+			textBox11.Text = "0";
 			if (CalculatedPictureBox.Image != null) sourceCalculatedImage = (Image)CalculatedPictureBox.Image.Clone();
 			else
 			{
@@ -80,9 +97,22 @@ namespace PracaMagisterska_v2
 				input = (Bitmap)GaborApplier.ApplyHong(input, orientaions, frequencies,
 					float.Parse(textBox4.Text), float.Parse(textBox3.Text), int.Parse(textBox1.Text));
 			}
+			else if (comboBox1.Text.Equals("BestResponse"))
+			{
+				input = (Bitmap)GaborApplier.ApplyBestResponse(input,
+					float.Parse(textBox4.Text), float.Parse(textBox3.Text), int.Parse(textBox1.Text));
+
+			}
 			else if (comboBox1.Text.Equals("FilterBank"))
 			{
-				input = (Bitmap)GaborApplier.ApplyBank(input,
+				var orientation = new HongOrientationEstimation();
+				var freq = new HongFrequencyEstimation();
+				orientation.BlockSize = Convert.ToByte(int.Parse(textBox2.Text));
+				freq.BlockSize = Convert.ToByte(int.Parse(textBox2.Text));
+				var orientaions = orientation.ExtractFeatures(input);
+				var frequencies = freq.ExtractFeatures(input, orientaions);
+
+				input = (Bitmap)GaborApplier.ApplyHong(input, orientaions, frequencies,
 					float.Parse(textBox4.Text), float.Parse(textBox3.Text), int.Parse(textBox1.Text));
 
 			}
@@ -199,7 +229,9 @@ namespace PracaMagisterska_v2
 
 		private void button9_Click(object sender, EventArgs e)
 		{
+			MinutiaContainer.Instance.CalculatedMinutiaeList.Clear();
 			var orientation = new HongOrientationEstimation { BlockSize = Convert.ToByte(int.Parse(textBox2.Text)) };
+			CalculatedPictureBox.Image = (Image)sourceCalculatedImage.Clone();
 			if (CalculatedPictureBox.Image != null)
 			{
 				var orientaions = orientation.ExtractFeatures(new Bitmap(CalculatedPictureBox.Image));
@@ -209,9 +241,251 @@ namespace PracaMagisterska_v2
 						int.Parse(textBox5.Text), int.Parse(textBox6.Text), int.Parse(textBox7.Text));
 			}
 			else return;
-			CalculatedPictureBox.Image = (Image)sourceCalculatedImage.Clone();
 			Graphics g = Graphics.FromImage(CalculatedPictureBox.Image);
 			MinutiaImageDisplay.DrawMinutia(MinutiaContainer.Instance.CalculatedMinutiaeList, g);
+			textBox10.Text = MinutiaContainer.Instance.CalculatedMinutiaeList.Count(m => m.MinutiaType == MinutiaType.End).ToString();
+			textBox11.Text = MinutiaContainer.Instance.CalculatedMinutiaeList.Count(m => m.MinutiaType == MinutiaType.Bifurcation).ToString();
+		}
+
+		private void ReferencePictureBox_Click(object sender, EventArgs e)
+		{
+			var mouseEventArgs = e as MouseEventArgs;
+			if (mouseEventArgs != null)
+			{
+				var clickPosition = new Point()
+				{
+					X = mouseEventArgs.X,
+					Y = mouseEventArgs.Y
+				};
+				if (mouseEventArgs.Button == MouseButtons.Left)
+				{
+					if (sourceReferenceImage == null) return;
+					if (ReferencePictureBox.Image == null) return;
+					if (!_wasFirstClick)
+					{
+						var point = ReferencePictureBox.PointToScreen(Point.Empty);
+						Cursor.Clip = new Rectangle(point.X, point.Y, ReferencePictureBox.Width, ReferencePictureBox.Height);
+						_wasFirstClick = true;
+						ReferencePictureBox.Image = (Image)sourceReferenceImage.Clone();
+						Bitmap tempBitmap = new Bitmap(ReferencePictureBox.Image.Width, ReferencePictureBox.Image.Height);
+
+						// From this bitmap, the graphics can be obtained, because it has the right PixelFormat
+						using (Graphics g = Graphics.FromImage(tempBitmap))
+						{
+							// Draw the original bitmap onto the graphics of the new bitmap
+							g.DrawImage(ReferencePictureBox.Image, 0, 0);
+							// Use g to do whatever you like
+							g.DrawEllipse(new Pen(Color.Yellow, 2), new Rectangle(clickPosition.X - 5, clickPosition.Y - 5, 10, 10));
+						}
+						_lockSwapingRefImage = true;
+						ReferencePictureBox.Image = tempBitmap;
+					}
+					else
+					{
+						var minutiaeType = MinutiaType.End;
+						if (ModifierKeys.HasFlag(Keys.Control))
+						{
+							minutiaeType = MinutiaType.Bifurcation;
+						}
+						Cursor.Clip = Rectangle.Empty;
+
+						MinutiaContainer.Instance.ReferenceMinutiaeList.Add(
+							new Minutia()
+							{
+								Angle = Angle(new Point(clickPosition.X - 5, clickPosition.Y - 5), new Point(_lastClickPosition.X - 5, _lastClickPosition.Y - 5)),
+								X = (short)_lastClickPosition.X,
+								Y = (short)_lastClickPosition.Y,
+								MinutiaType = minutiaeType
+							});
+
+						_wasFirstClick = false;
+						Bitmap tempBitmap = new Bitmap(ReferencePictureBox.Image.Width, ReferencePictureBox.Image.Height);
+
+						// From this bitmap, the graphics can be obtained, because it has the right PixelFormat
+						using (Graphics g = Graphics.FromImage(tempBitmap))
+						{
+							// Draw the original bitmap onto the graphics of the new bitmap
+							g.DrawImage(ReferencePictureBox.Image, 0, 0);
+							// Use g to do whatever you like
+							MinutiaImageDisplay.DrawMinutia(MinutiaContainer.Instance.ReferenceMinutiaeList, g);
+							textBox8.Text = MinutiaContainer.Instance.ReferenceMinutiaeList.Count(m => m.MinutiaType == MinutiaType.End).ToString();
+							textBox9.Text = MinutiaContainer.Instance.ReferenceMinutiaeList.Count(m => m.MinutiaType == MinutiaType.Bifurcation).ToString();
+						}
+						_lockSwapingRefImage = true;
+						ReferencePictureBox.Image = tempBitmap;
+					}
+				}
+
+				if (mouseEventArgs.Button == MouseButtons.Right && !_wasFirstClick)
+				{
+					Remove(clickPosition.X, clickPosition.Y);
+					ReferencePictureBox.Image = (Image)sourceReferenceImage.Clone();
+					Bitmap tempBitmap = new Bitmap(ReferencePictureBox.Image.Width, ReferencePictureBox.Image.Height);
+
+					// From this bitmap, the graphics can be obtained, because it has the right PixelFormat
+					using (Graphics g = Graphics.FromImage(tempBitmap))
+					{
+						// Draw the original bitmap onto the graphics of the new bitmap
+						g.DrawImage(ReferencePictureBox.Image, 0, 0);
+						// Use g to do whatever you like
+						MinutiaImageDisplay.DrawMinutia(MinutiaContainer.Instance.ReferenceMinutiaeList, g);
+						textBox8.Text = MinutiaContainer.Instance.ReferenceMinutiaeList.Count(m => m.MinutiaType == MinutiaType.End).ToString();
+						textBox9.Text = MinutiaContainer.Instance.ReferenceMinutiaeList.Count(m => m.MinutiaType == MinutiaType.Bifurcation).ToString();
+					}
+					_lockSwapingRefImage = true;
+					ReferencePictureBox.Image = tempBitmap;
+				}
+				_lastClickPosition = clickPosition;
+			}
+		}
+
+		private double Angle(Point p1, Point p2)
+		{
+			float xDiff = p1.X - p2.X;
+			float yDiff = p1.Y - p2.Y;
+			return Math.Atan2(yDiff, xDiff);
+		}
+
+		private void Remove(int x, int y)
+		{
+
+			if (MinutiaContainer.Instance.ReferenceMinutiaeList == null) return;
+			for (int i = 0; i < MinutiaContainer.Instance.ReferenceMinutiaeList.Count; i++)
+			{
+				var minutiae = MinutiaContainer.Instance.ReferenceMinutiaeList[i];
+				var point = new Point(minutiae.X, minutiae.Y);
+				var rect = new Rectangle(x - 15, y - 15, 20, 20);
+				if (rect.Contains(point))
+				{
+					MinutiaContainer.Instance.ReferenceMinutiaeList.RemoveAt(i);
+				}
+			}
+		}
+
+		private bool _wasFirstClick = false;
+		private bool _lockSwapingRefImage = false;
+		private Point _lastClickPosition;
+
+		private void button10_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				var sfd = new SaveFileDialog();
+				sfd.Filter = "Minucje|*.txt;*";
+				if (sfd.ShowDialog() == DialogResult.OK)
+				{
+					var output = "";
+					if (MinutiaContainer.Instance.ReferenceMinutiaeList.Any())
+					{
+						output = JsonConvert.SerializeObject(MinutiaContainer.Instance.ReferenceMinutiaeList);
+					}
+					File.WriteAllText(sfd.FileName, output);
+					
+				}
+			}
+			catch (Exception exception)
+			{
+			}
+		}
+
+		private void button11_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				using (var dlg = new OpenFileDialog())
+				{
+					dlg.Title = "Plik z minucjami";
+
+					if (dlg.ShowDialog() == DialogResult.OK)
+					{
+						var dlgFileName = dlg.FileName;
+						var output = File.ReadAllText(dlgFileName);
+						MinutiaContainer.Instance.ReferenceMinutiaeList = JsonConvert.DeserializeObject<List<Minutia>>(output);
+						Bitmap tempBitmap = new Bitmap(ReferencePictureBox.Image.Width, ReferencePictureBox.Image.Height);
+
+						// From this bitmap, the graphics can be obtained, because it has the right PixelFormat
+						using (Graphics g = Graphics.FromImage(tempBitmap))
+						{
+							// Draw the original bitmap onto the graphics of the new bitmap
+							g.DrawImage(ReferencePictureBox.Image, 0, 0);
+							// Use g to do whatever you like
+							MinutiaImageDisplay.DrawMinutia(MinutiaContainer.Instance.ReferenceMinutiaeList, g);
+							textBox8.Text = MinutiaContainer.Instance.ReferenceMinutiaeList.Count(m => m.MinutiaType == MinutiaType.End).ToString();
+							textBox9.Text = MinutiaContainer.Instance.ReferenceMinutiaeList.Count(m => m.MinutiaType == MinutiaType.Bifurcation).ToString();
+						}
+						_lockSwapingRefImage = true;
+						ReferencePictureBox.Image = tempBitmap;
+					}
+				}
+			}
+			catch (Exception exception)
+			{
+			}
+		}
+
+		private void button13_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				var sfd = new SaveFileDialog();
+				sfd.Filter = "Minucje|*.txt;*";
+				if (sfd.ShowDialog() == DialogResult.OK)
+				{
+					var output = "";
+					if (MinutiaContainer.Instance.CalculatedMinutiaeList.Any())
+					{
+						output = JsonConvert.SerializeObject(MinutiaContainer.Instance.CalculatedMinutiaeList);
+					}
+					File.WriteAllText(sfd.FileName, output);
+
+				}
+			}
+			catch (Exception exception)
+			{
+			}
+		}
+
+		private void button12_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				using (var dlg = new OpenFileDialog())
+				{
+					dlg.Title = "Plik z minucjami";
+
+					if (dlg.ShowDialog() == DialogResult.OK)
+					{
+						var dlgFileName = dlg.FileName;
+						var output = File.ReadAllText(dlgFileName);
+						MinutiaContainer.Instance.CalculatedMinutiaeList = JsonConvert.DeserializeObject<List<Minutia>>(output);
+						Bitmap tempBitmap = new Bitmap(CalculatedPictureBox.Image.Width, CalculatedPictureBox.Image.Height);
+
+						// From this bitmap, the graphics can be obtained, because it has the right PixelFormat
+						using (Graphics g = Graphics.FromImage(tempBitmap))
+						{
+							// Draw the original bitmap onto the graphics of the new bitmap
+							g.DrawImage(CalculatedPictureBox.Image, 0, 0);
+							// Use g to do whatever you like
+							MinutiaImageDisplay.DrawMinutia(MinutiaContainer.Instance.CalculatedMinutiaeList, g);
+							textBox8.Text = MinutiaContainer.Instance.CalculatedMinutiaeList.Count(m => m.MinutiaType == MinutiaType.End).ToString();
+							textBox9.Text = MinutiaContainer.Instance.CalculatedMinutiaeList.Count(m => m.MinutiaType == MinutiaType.Bifurcation).ToString();
+						}
+						_lockSwapingRefImage = true;
+						CalculatedPictureBox.Image = tempBitmap;
+					}
+				}
+			}
+			catch (Exception exception)
+			{
+			}
+		}
+
+		private void button14_Click(object sender, EventArgs e)
+		{
+			if(ReferencePictureBox.Image == null || CalculatedPictureBox.Image == null) return;
+			
+			EvalWindow frmAbout = new EvalWindow();
+			frmAbout.ShowDialog();
 		}
 	}
 }

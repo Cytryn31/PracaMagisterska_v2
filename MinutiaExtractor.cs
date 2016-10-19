@@ -117,7 +117,7 @@ namespace PracaMagisterska_v2
 						if (i != j)
 						{
 							Minutia mB = noInTheBorder[j];
-							// different to orientation image
+//							// different to orientation image
 							int row, col;
 							orientationImage.GetBlockCoordFromPixel(mA.X, mA.Y, out row, out col);
 							double angleOI = orientationImage.AngleInRadians(row, col);
@@ -126,7 +126,7 @@ namespace PracaMagisterska_v2
 									Angle.DifferencePi(mA.Angle, angleOI + Math.PI)) > Math.PI / 6)
 								toErase[i] = true;
 
-							//  near minutiaes elimination
+//							//  near minutiaes elimination
 							if (mA.MinutiaType == mB.MinutiaType &&
 								Distance(mA, mB) < nearDistance)
 								toErase[i] = toErase[j] = true;

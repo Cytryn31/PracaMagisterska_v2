@@ -22,9 +22,11 @@ namespace PracaMagisterska_v2.Frequency
 		/// </summary>
 		/// <param name="image">The source bitmap image to extract features from.</param>
 		/// <returns>The features extracted from the specified bitmap image.</returns>
-		public OrientationImage ExtractFeatures(Bitmap image, OrientationImage orientationImage)
+		public double ExtractFeatures(Bitmap image, OrientationImage orientationImage)
 		{
 			var windowSize = BlockSize * 2;
+			double sumsumsum = 0;
+			int count = 0;
 			ImageMatrix matrix = new ImageMatrix(image);
 			byte width = Convert.ToByte(image.Width / BlockSize);
 			byte height = Convert.ToByte(image.Height / BlockSize);
@@ -56,23 +58,26 @@ namespace PracaMagisterska_v2.Frequency
 						XSignature.Add((int)sum);
 					}
 
-					var peaks = FindPeakElementRecursion(XSignature.ToArray(), 5);
+					var peaks = FindPeakElementRecursion(XSignature.ToArray(),350);
 					var peaksLength = peaks.Count;
 					if (peaksLength > 1)
 					{
 						var dist = Math.Abs(peaks[0] - peaks[peaksLength - 1]);
-						oi[row, col] = Convert.ToByte(Math.Round((double)(dist / (peaksLength - 1))));
+						sumsumsum += (double)(dist / (peaksLength - 1));
+						count++;
+						//oi[row, col] = Convert.ToByte(Math.Round((double)(dist / (peaksLength - 1))));
 					}
 					else
 					{
-						oi[row, col] = Convert.ToByte(Math.Round((double)(0)));
+						//oi[row, col] = Convert.ToByte(Math.Round((double)(0)));
 					}
 					//					var divider = (double) (BlockSize*windowSize*255);
 					//					var sumD = (double)XSignature.Sum();
 					//					double value = sumD == 0 ? 0: (sumD/divider);
 					//					oi[row, col] = Convert.ToByte(value);
 				}
-			return oi;
+
+			return sumsumsum/count;
 		}
 
 		private static List<int> FindPeakElementRecursion(int[] num, double delta)

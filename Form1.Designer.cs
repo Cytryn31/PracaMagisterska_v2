@@ -39,54 +39,46 @@ namespace PracaMagisterska_v2
 			this.button13 = new System.Windows.Forms.Button();
 			this.button11 = new System.Windows.Forms.Button();
 			this.button10 = new System.Windows.Forms.Button();
-			this.textBox10 = new PracaMagisterska_v2.Forms.CustomTextBox();
-			this.label12 = new System.Windows.Forms.Label();
-			this.textBox11 = new PracaMagisterska_v2.Forms.CustomTextBox();
-			this.label13 = new System.Windows.Forms.Label();
-			this.textBox9 = new PracaMagisterska_v2.Forms.CustomTextBox();
-			this.label11 = new System.Windows.Forms.Label();
-			this.textBox8 = new PracaMagisterska_v2.Forms.CustomTextBox();
-			this.label10 = new System.Windows.Forms.Label();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.label9 = new System.Windows.Forms.Label();
-			this.textBox7 = new PracaMagisterska_v2.Forms.CustomTextBox();
 			this.label8 = new System.Windows.Forms.Label();
-			this.textBox6 = new PracaMagisterska_v2.Forms.CustomTextBox();
 			this.label7 = new System.Windows.Forms.Label();
-			this.textBox5 = new PracaMagisterska_v2.Forms.CustomTextBox();
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.button9 = new System.Windows.Forms.Button();
 			this.label6 = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.label5 = new System.Windows.Forms.Label();
 			this.button8 = new System.Windows.Forms.Button();
-			this.thresholdingSelector1 = new PracaMagisterska_v2.ThresholdingSelector();
-			this.normalizationForm1 = new PracaMagisterska_v2.Forms.NormalizationForm();
 			this.label4 = new System.Windows.Forms.Label();
-			this.textBox4 = new PracaMagisterska_v2.Forms.CustomTextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.textBox3 = new PracaMagisterska_v2.Forms.CustomTextBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.textBox2 = new PracaMagisterska_v2.Forms.CustomTextBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.textBox1 = new PracaMagisterska_v2.Forms.CustomTextBox();
 			this.button7 = new System.Windows.Forms.Button();
 			this.button6 = new System.Windows.Forms.Button();
 			this.button5 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
-			this.CalculatedPictureBox = new PracaMagisterska_v2.Forms.CustomPictureBox();
-			this.ReferencePictureBox = new PracaMagisterska_v2.Forms.CustomPictureBox();
 			this.button2 = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.textBox7 = new PracaMagisterska_v2.Forms.CustomTextBox();
+			this.textBox6 = new PracaMagisterska_v2.Forms.CustomTextBox();
+			this.textBox5 = new PracaMagisterska_v2.Forms.CustomTextBox();
+			this.thresholdingSelector1 = new PracaMagisterska_v2.ThresholdingSelector();
+			this.normalizationForm1 = new PracaMagisterska_v2.Forms.NormalizationForm();
+			this.textBox4 = new PracaMagisterska_v2.Forms.CustomTextBox();
+			this.textBox3 = new PracaMagisterska_v2.Forms.CustomTextBox();
+			this.textBox2 = new PracaMagisterska_v2.Forms.CustomTextBox();
+			this.textBox1 = new PracaMagisterska_v2.Forms.CustomTextBox();
+			this.CalculatedPictureBox = new PracaMagisterska_v2.Forms.CustomPictureBox();
+			this.ReferencePictureBox = new PracaMagisterska_v2.Forms.CustomPictureBox();
 			this.Gabor.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
+			this.tabControl1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CalculatedPictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ReferencePictureBox)).BeginInit();
-			this.tabControl1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// Gabor
@@ -96,14 +88,6 @@ namespace PracaMagisterska_v2
 			this.Gabor.Controls.Add(this.button13);
 			this.Gabor.Controls.Add(this.button11);
 			this.Gabor.Controls.Add(this.button10);
-			this.Gabor.Controls.Add(this.textBox10);
-			this.Gabor.Controls.Add(this.label12);
-			this.Gabor.Controls.Add(this.textBox11);
-			this.Gabor.Controls.Add(this.label13);
-			this.Gabor.Controls.Add(this.textBox9);
-			this.Gabor.Controls.Add(this.label11);
-			this.Gabor.Controls.Add(this.textBox8);
-			this.Gabor.Controls.Add(this.label10);
 			this.Gabor.Controls.Add(this.comboBox1);
 			this.Gabor.Controls.Add(this.panel2);
 			this.Gabor.Controls.Add(this.panel1);
@@ -184,78 +168,6 @@ namespace PracaMagisterska_v2
 			this.button10.UseVisualStyleBackColor = true;
 			this.button10.Click += new System.EventHandler(this.button10_Click);
 			// 
-			// textBox10
-			// 
-			this.textBox10.Location = new System.Drawing.Point(1033, 23);
-			this.textBox10.Name = "textBox10";
-			this.textBox10.ReadOnly = true;
-			this.textBox10.Size = new System.Drawing.Size(25, 20);
-			this.textBox10.TabIndex = 34;
-			this.textBox10.Text = "0";
-			// 
-			// label12
-			// 
-			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(972, 25);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(62, 13);
-			this.label12.TabIndex = 33;
-			this.label12.Text = "Bifurcations";
-			// 
-			// textBox11
-			// 
-			this.textBox11.Location = new System.Drawing.Point(1033, 2);
-			this.textBox11.Name = "textBox11";
-			this.textBox11.ReadOnly = true;
-			this.textBox11.Size = new System.Drawing.Size(25, 20);
-			this.textBox11.TabIndex = 32;
-			this.textBox11.Text = "0";
-			// 
-			// label13
-			// 
-			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(972, 4);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(31, 13);
-			this.label13.TabIndex = 31;
-			this.label13.Text = "Ends";
-			// 
-			// textBox9
-			// 
-			this.textBox9.Location = new System.Drawing.Point(463, 23);
-			this.textBox9.Name = "textBox9";
-			this.textBox9.ReadOnly = true;
-			this.textBox9.Size = new System.Drawing.Size(25, 20);
-			this.textBox9.TabIndex = 30;
-			this.textBox9.Text = "0";
-			// 
-			// label11
-			// 
-			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(402, 25);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(62, 13);
-			this.label11.TabIndex = 29;
-			this.label11.Text = "Bifurcations";
-			// 
-			// textBox8
-			// 
-			this.textBox8.Location = new System.Drawing.Point(463, 2);
-			this.textBox8.Name = "textBox8";
-			this.textBox8.ReadOnly = true;
-			this.textBox8.Size = new System.Drawing.Size(25, 20);
-			this.textBox8.TabIndex = 28;
-			this.textBox8.Text = "0";
-			// 
-			// label10
-			// 
-			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(402, 4);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(31, 13);
-			this.label10.TabIndex = 27;
-			this.label10.Text = "Ends";
-			// 
 			// comboBox1
 			// 
 			this.comboBox1.FormattingEnabled = true;
@@ -289,14 +201,6 @@ namespace PracaMagisterska_v2
 			this.label9.TabIndex = 8;
 			this.label9.Text = "Spike detection distance";
 			// 
-			// textBox7
-			// 
-			this.textBox7.Location = new System.Drawing.Point(135, 82);
-			this.textBox7.Name = "textBox7";
-			this.textBox7.Size = new System.Drawing.Size(22, 20);
-			this.textBox7.TabIndex = 7;
-			this.textBox7.Text = "15";
-			// 
 			// label8
 			// 
 			this.label8.AutoSize = true;
@@ -306,14 +210,6 @@ namespace PracaMagisterska_v2
 			this.label8.TabIndex = 6;
 			this.label8.Text = "Broken ridge distance";
 			// 
-			// textBox6
-			// 
-			this.textBox6.Location = new System.Drawing.Point(121, 60);
-			this.textBox6.Name = "textBox6";
-			this.textBox6.Size = new System.Drawing.Size(22, 20);
-			this.textBox6.TabIndex = 5;
-			this.textBox6.Text = "10";
-			// 
 			// label7
 			// 
 			this.label7.AutoSize = true;
@@ -322,14 +218,6 @@ namespace PracaMagisterska_v2
 			this.label7.Size = new System.Drawing.Size(87, 13);
 			this.label7.TabIndex = 4;
 			this.label7.Text = "To near distance";
-			// 
-			// textBox5
-			// 
-			this.textBox5.Location = new System.Drawing.Point(112, 39);
-			this.textBox5.Name = "textBox5";
-			this.textBox5.Size = new System.Drawing.Size(22, 20);
-			this.textBox5.TabIndex = 3;
-			this.textBox5.Text = "5";
 			// 
 			// checkBox1
 			// 
@@ -389,22 +277,6 @@ namespace PracaMagisterska_v2
 			this.button8.UseVisualStyleBackColor = true;
 			this.button8.Click += new System.EventHandler(this.button8_Click);
 			// 
-			// thresholdingSelector1
-			// 
-			this.thresholdingSelector1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.thresholdingSelector1.Location = new System.Drawing.Point(6, 296);
-			this.thresholdingSelector1.Name = "thresholdingSelector1";
-			this.thresholdingSelector1.Size = new System.Drawing.Size(225, 266);
-			this.thresholdingSelector1.TabIndex = 21;
-			// 
-			// normalizationForm1
-			// 
-			this.normalizationForm1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.normalizationForm1.Location = new System.Drawing.Point(6, 124);
-			this.normalizationForm1.Name = "normalizationForm1";
-			this.normalizationForm1.Size = new System.Drawing.Size(225, 166);
-			this.normalizationForm1.TabIndex = 20;
-			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
@@ -414,15 +286,6 @@ namespace PracaMagisterska_v2
 			this.label4.Size = new System.Drawing.Size(43, 13);
 			this.label4.TabIndex = 16;
 			this.label4.Text = "Gamma";
-			// 
-			// textBox4
-			// 
-			this.textBox4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.textBox4.Location = new System.Drawing.Point(86, 98);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(29, 20);
-			this.textBox4.TabIndex = 15;
-			this.textBox4.Text = "1";
 			// 
 			// label3
 			// 
@@ -434,15 +297,6 @@ namespace PracaMagisterska_v2
 			this.label3.TabIndex = 14;
 			this.label3.Text = "Sigma";
 			// 
-			// textBox3
-			// 
-			this.textBox3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.textBox3.Location = new System.Drawing.Point(86, 72);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(29, 20);
-			this.textBox3.TabIndex = 13;
-			this.textBox3.Text = "4";
-			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
@@ -453,15 +307,6 @@ namespace PracaMagisterska_v2
 			this.label2.TabIndex = 12;
 			this.label2.Text = "Window Size";
 			// 
-			// textBox2
-			// 
-			this.textBox2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.textBox2.Location = new System.Drawing.Point(86, 18);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(100, 20);
-			this.textBox2.TabIndex = 11;
-			this.textBox2.Text = "15";
-			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
@@ -471,15 +316,6 @@ namespace PracaMagisterska_v2
 			this.label1.Size = new System.Drawing.Size(60, 13);
 			this.label1.TabIndex = 10;
 			this.label1.Text = "Kernel Size";
-			// 
-			// textBox1
-			// 
-			this.textBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.textBox1.Location = new System.Drawing.Point(86, 46);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(29, 20);
-			this.textBox1.TabIndex = 9;
-			this.textBox1.Text = "3";
 			// 
 			// button7
 			// 
@@ -531,29 +367,6 @@ namespace PracaMagisterska_v2
 			this.button3.UseVisualStyleBackColor = true;
 			this.button3.Click += new System.EventHandler(this.loadPictureButton_Click);
 			// 
-			// CalculatedPictureBox
-			// 
-			this.CalculatedPictureBox.BackColor = System.Drawing.Color.Black;
-			this.CalculatedPictureBox.Image = null;
-			this.CalculatedPictureBox.Location = new System.Drawing.Point(759, 44);
-			this.CalculatedPictureBox.Name = "CalculatedPictureBox";
-			this.CalculatedPictureBox.Size = new System.Drawing.Size(516, 672);
-			this.CalculatedPictureBox.TabIndex = 3;
-			this.CalculatedPictureBox.TabStop = false;
-			this.CalculatedPictureBox.ImageChanged += new System.EventHandler(this.calcImageChanged_Event);
-			// 
-			// ReferencePictureBox
-			// 
-			this.ReferencePictureBox.BackColor = System.Drawing.Color.Black;
-			this.ReferencePictureBox.Image = null;
-			this.ReferencePictureBox.Location = new System.Drawing.Point(237, 44);
-			this.ReferencePictureBox.Name = "ReferencePictureBox";
-			this.ReferencePictureBox.Size = new System.Drawing.Size(516, 672);
-			this.ReferencePictureBox.TabIndex = 2;
-			this.ReferencePictureBox.TabStop = false;
-			this.ReferencePictureBox.ImageChanged += new System.EventHandler(this.refImageChanged_Event);
-			this.ReferencePictureBox.Click += new System.EventHandler(this.ReferencePictureBox_Click);
-			// 
 			// button2
 			// 
 			this.button2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -585,6 +398,112 @@ namespace PracaMagisterska_v2
 			this.tabControl1.Size = new System.Drawing.Size(1300, 755);
 			this.tabControl1.TabIndex = 4;
 			// 
+			// textBox7
+			// 
+			this.textBox7.AllowSpace = false;
+			this.textBox7.Location = new System.Drawing.Point(135, 82);
+			this.textBox7.Name = "textBox7";
+			this.textBox7.Size = new System.Drawing.Size(22, 20);
+			this.textBox7.TabIndex = 7;
+			this.textBox7.Text = "15";
+			// 
+			// textBox6
+			// 
+			this.textBox6.AllowSpace = false;
+			this.textBox6.Location = new System.Drawing.Point(121, 60);
+			this.textBox6.Name = "textBox6";
+			this.textBox6.Size = new System.Drawing.Size(22, 20);
+			this.textBox6.TabIndex = 5;
+			this.textBox6.Text = "10";
+			// 
+			// textBox5
+			// 
+			this.textBox5.AllowSpace = false;
+			this.textBox5.Location = new System.Drawing.Point(112, 39);
+			this.textBox5.Name = "textBox5";
+			this.textBox5.Size = new System.Drawing.Size(22, 20);
+			this.textBox5.TabIndex = 3;
+			this.textBox5.Text = "5";
+			// 
+			// thresholdingSelector1
+			// 
+			this.thresholdingSelector1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.thresholdingSelector1.Location = new System.Drawing.Point(6, 296);
+			this.thresholdingSelector1.Name = "thresholdingSelector1";
+			this.thresholdingSelector1.Size = new System.Drawing.Size(225, 266);
+			this.thresholdingSelector1.TabIndex = 21;
+			// 
+			// normalizationForm1
+			// 
+			this.normalizationForm1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.normalizationForm1.Location = new System.Drawing.Point(6, 124);
+			this.normalizationForm1.Name = "normalizationForm1";
+			this.normalizationForm1.Size = new System.Drawing.Size(225, 166);
+			this.normalizationForm1.TabIndex = 20;
+			// 
+			// textBox4
+			// 
+			this.textBox4.AllowSpace = false;
+			this.textBox4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.textBox4.Location = new System.Drawing.Point(86, 98);
+			this.textBox4.Name = "textBox4";
+			this.textBox4.Size = new System.Drawing.Size(29, 20);
+			this.textBox4.TabIndex = 15;
+			this.textBox4.Text = "1";
+			// 
+			// textBox3
+			// 
+			this.textBox3.AllowSpace = false;
+			this.textBox3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.textBox3.Location = new System.Drawing.Point(86, 72);
+			this.textBox3.Name = "textBox3";
+			this.textBox3.Size = new System.Drawing.Size(29, 20);
+			this.textBox3.TabIndex = 13;
+			this.textBox3.Text = "4";
+			// 
+			// textBox2
+			// 
+			this.textBox2.AllowSpace = false;
+			this.textBox2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.textBox2.Location = new System.Drawing.Point(86, 18);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(100, 20);
+			this.textBox2.TabIndex = 11;
+			this.textBox2.Text = "15";
+			// 
+			// textBox1
+			// 
+			this.textBox1.AllowSpace = false;
+			this.textBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.textBox1.Location = new System.Drawing.Point(86, 46);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(29, 20);
+			this.textBox1.TabIndex = 9;
+			this.textBox1.Text = "3";
+			// 
+			// CalculatedPictureBox
+			// 
+			this.CalculatedPictureBox.BackColor = System.Drawing.Color.Black;
+			this.CalculatedPictureBox.Image = null;
+			this.CalculatedPictureBox.Location = new System.Drawing.Point(759, 44);
+			this.CalculatedPictureBox.Name = "CalculatedPictureBox";
+			this.CalculatedPictureBox.Size = new System.Drawing.Size(516, 672);
+			this.CalculatedPictureBox.TabIndex = 3;
+			this.CalculatedPictureBox.TabStop = false;
+			this.CalculatedPictureBox.ImageChanged += new System.EventHandler(this.calcImageChanged_Event);
+			// 
+			// ReferencePictureBox
+			// 
+			this.ReferencePictureBox.BackColor = System.Drawing.Color.Black;
+			this.ReferencePictureBox.Image = null;
+			this.ReferencePictureBox.Location = new System.Drawing.Point(237, 44);
+			this.ReferencePictureBox.Name = "ReferencePictureBox";
+			this.ReferencePictureBox.Size = new System.Drawing.Size(516, 672);
+			this.ReferencePictureBox.TabIndex = 2;
+			this.ReferencePictureBox.TabStop = false;
+			this.ReferencePictureBox.ImageChanged += new System.EventHandler(this.refImageChanged_Event);
+			this.ReferencePictureBox.Click += new System.EventHandler(this.ReferencePictureBox_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -600,9 +519,9 @@ namespace PracaMagisterska_v2
 			this.panel2.PerformLayout();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
+			this.tabControl1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.CalculatedPictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ReferencePictureBox)).EndInit();
-			this.tabControl1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -637,10 +556,6 @@ namespace PracaMagisterska_v2
 		private Label label1;
 		private Button button2;
 		private Button button1;
-		private Label label11;
-		private Label label10;
-		private Label label12;
-		private Label label13;
 		private Button button10;
 		private Button button12;
 		private Button button13;
@@ -653,10 +568,6 @@ namespace PracaMagisterska_v2
 		private CustomTextBox textBox3;
 		private CustomTextBox textBox2;
 		private CustomTextBox textBox1;
-		private CustomTextBox textBox9;
-		private CustomTextBox textBox8;
-		private CustomTextBox textBox10;
-		private CustomTextBox textBox11;
 	}
 }
 

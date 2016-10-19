@@ -40,8 +40,6 @@ namespace PracaMagisterska_v2
 
 		private void refImageChanged_Event(object sender, EventArgs e)
 		{
-			textBox8.Text = "0";
-			textBox9.Text = "0";
 			if (!_lockSwapingRefImage)
 			{
 				sourceReferenceImage = (Image)ReferencePictureBox.Image.Clone();
@@ -54,8 +52,6 @@ namespace PracaMagisterska_v2
 
 		private void calcImageChanged_Event(object sender, EventArgs e)
 		{
-			textBox10.Text = "0";
-			textBox11.Text = "0";
 			if (CalculatedPictureBox.Image != null) sourceCalculatedImage = (Image)CalculatedPictureBox.Image.Clone();
 			else
 			{
@@ -122,6 +118,7 @@ namespace PracaMagisterska_v2
 		private void loadPictureButton_Click(object sender, EventArgs e)
 		{
 			Grayscale grayscaleFilter = new Grayscale(0.2125, 0.7154, 0.0721);
+			MinutiaContainer.Instance.ReferenceMinutiaeList.Clear();
 			try
 			{
 				var pictureBox = ReferencePictureBox;
@@ -189,7 +186,7 @@ namespace PracaMagisterska_v2
 							format = ImageFormat.Bmp;
 							break;
 					}
-					ReferencePictureBox.Image.Save(sfd.FileName, format);
+					CalculatedPictureBox.Image.Save(sfd.FileName, format);
 				}
 			}
 			catch (Exception exception)
@@ -208,12 +205,15 @@ namespace PracaMagisterska_v2
 		private void button6_Click(object sender, EventArgs e)
 		{
 			ReferencePictureBox.Image = (Image)CalculatedPictureBox.Image.Clone();
+			MinutiaContainer.Instance.CalculatedMinutiaeList.Clear();
+			MinutiaContainer.Instance.ReferenceMinutiaeList.Clear();
 			CalculatedPictureBox.Image = null;
 		}
 
 		private void button7_Click(object sender, EventArgs e)
 		{
 			if (sourceReferenceImage == null) return;
+			MinutiaContainer.Instance.ReferenceMinutiaeList.Clear();
 			ReferencePictureBox.Image = (Image)sourceReferenceImage.Clone();
 		}
 
@@ -235,7 +235,7 @@ namespace PracaMagisterska_v2
 			if (CalculatedPictureBox.Image != null)
 			{
 				var orientaions = orientation.ExtractFeatures(new Bitmap(CalculatedPictureBox.Image));
-				if (checkBox1.Checked && (textBox5.Text != null || textBox5.Text != null || textBox7.Text != null)) return;
+				if (checkBox1.Checked && (textBox5.Text == null || textBox5.Text == null || textBox7.Text == null)) return;
 				MinutiaContainer.Instance.CalculatedMinutiaeList =
 					MinutiaExtractor.GetMinutiaes(new Bitmap(CalculatedPictureBox.Image), orientaions, checkBox1.Checked,
 						int.Parse(textBox5.Text), int.Parse(textBox6.Text), int.Parse(textBox7.Text));
@@ -243,8 +243,6 @@ namespace PracaMagisterska_v2
 			else return;
 			Graphics g = Graphics.FromImage(CalculatedPictureBox.Image);
 			MinutiaImageDisplay.DrawMinutia(MinutiaContainer.Instance.CalculatedMinutiaeList, g);
-			textBox10.Text = MinutiaContainer.Instance.CalculatedMinutiaeList.Count(m => m.MinutiaType == MinutiaType.End).ToString();
-			textBox11.Text = MinutiaContainer.Instance.CalculatedMinutiaeList.Count(m => m.MinutiaType == MinutiaType.Bifurcation).ToString();
 		}
 
 		private void ReferencePictureBox_Click(object sender, EventArgs e)
@@ -308,8 +306,6 @@ namespace PracaMagisterska_v2
 							g.DrawImage(ReferencePictureBox.Image, 0, 0);
 							// Use g to do whatever you like
 							MinutiaImageDisplay.DrawMinutia(MinutiaContainer.Instance.ReferenceMinutiaeList, g);
-							textBox8.Text = MinutiaContainer.Instance.ReferenceMinutiaeList.Count(m => m.MinutiaType == MinutiaType.End).ToString();
-							textBox9.Text = MinutiaContainer.Instance.ReferenceMinutiaeList.Count(m => m.MinutiaType == MinutiaType.Bifurcation).ToString();
 						}
 						_lockSwapingRefImage = true;
 						ReferencePictureBox.Image = tempBitmap;
@@ -329,8 +325,6 @@ namespace PracaMagisterska_v2
 						g.DrawImage(ReferencePictureBox.Image, 0, 0);
 						// Use g to do whatever you like
 						MinutiaImageDisplay.DrawMinutia(MinutiaContainer.Instance.ReferenceMinutiaeList, g);
-						textBox8.Text = MinutiaContainer.Instance.ReferenceMinutiaeList.Count(m => m.MinutiaType == MinutiaType.End).ToString();
-						textBox9.Text = MinutiaContainer.Instance.ReferenceMinutiaeList.Count(m => m.MinutiaType == MinutiaType.Bifurcation).ToString();
 					}
 					_lockSwapingRefImage = true;
 					ReferencePictureBox.Image = tempBitmap;
@@ -410,8 +404,6 @@ namespace PracaMagisterska_v2
 							g.DrawImage(ReferencePictureBox.Image, 0, 0);
 							// Use g to do whatever you like
 							MinutiaImageDisplay.DrawMinutia(MinutiaContainer.Instance.ReferenceMinutiaeList, g);
-							textBox8.Text = MinutiaContainer.Instance.ReferenceMinutiaeList.Count(m => m.MinutiaType == MinutiaType.End).ToString();
-							textBox9.Text = MinutiaContainer.Instance.ReferenceMinutiaeList.Count(m => m.MinutiaType == MinutiaType.Bifurcation).ToString();
 						}
 						_lockSwapingRefImage = true;
 						ReferencePictureBox.Image = tempBitmap;
@@ -467,8 +459,6 @@ namespace PracaMagisterska_v2
 							g.DrawImage(CalculatedPictureBox.Image, 0, 0);
 							// Use g to do whatever you like
 							MinutiaImageDisplay.DrawMinutia(MinutiaContainer.Instance.CalculatedMinutiaeList, g);
-							textBox8.Text = MinutiaContainer.Instance.CalculatedMinutiaeList.Count(m => m.MinutiaType == MinutiaType.End).ToString();
-							textBox9.Text = MinutiaContainer.Instance.CalculatedMinutiaeList.Count(m => m.MinutiaType == MinutiaType.Bifurcation).ToString();
 						}
 						_lockSwapingRefImage = true;
 						CalculatedPictureBox.Image = tempBitmap;

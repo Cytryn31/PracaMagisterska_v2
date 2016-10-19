@@ -74,7 +74,7 @@ namespace PracaMagisterska_v2
 		}
 
 		public static Image ApplyHong(Image matrix, OrientationImage orientationImage,
-			OrientationImage freqImage, double gamma, double sigma, int ksize)
+			double freqImage, double gamma, double sigma, int ksize)
 		{
 			ImageMatrix newImg = new ImageMatrix(new Bitmap(matrix));
 			try
@@ -85,10 +85,10 @@ namespace PracaMagisterska_v2
 					{
 						int x, y;
 						var angle = orientationImage.IsNullBlock(row, col) ? 0 : orientationImage.AngleInRadians(row, col);
-						var freq = freqImage[row, col];
+					//	var freq = freqImage[row, col];
 						orientationImage.GetPixelCoordFromBlock(row, col, out x, out y);
 						int maxLength = orientationImage.WindowSize / 2;
-						var kernel = Gabor.Kernel2D(ksize, (20), angle, 1, sigma, gamma, false);
+						var kernel = Gabor.Kernel2D(ksize, (freqImage), angle, 1, sigma, gamma, false);
 						for (int xi = x - maxLength; xi < x + maxLength; xi++)
 						{
 							for (int yi = y - maxLength; yi < y + maxLength; yi++)
@@ -107,7 +107,7 @@ namespace PracaMagisterska_v2
 		}
 
 		public static Image ApplyBank(Image matrix, OrientationImage orientationImage,
-			OrientationImage freqImage, double gamma, double sigma, int ksize)
+			double freqImage, double gamma, double sigma, int ksize)
 		{
 			ImageMatrix newImg = new ImageMatrix(new Bitmap(matrix));
 			try
@@ -119,10 +119,10 @@ namespace PracaMagisterska_v2
 					{
 						int x, y;
 						var angle = orientationImage.IsNullBlock(row, col) ? 0 : orientationImage.AngleInRadians(row, col);
-						var freq = freqImage[row, col];
+					//	var freq = freqImage[row, col];
 						orientationImage.GetPixelCoordFromBlock(row, col, out x, out y);
 						int maxLength = orientationImage.WindowSize / 2;
-						var kernel = FindKernel(20, angle, kernels);
+						var kernel = FindKernel(freqImage, angle, kernels);
 						for (int xi = x - maxLength; xi < x + maxLength; xi++)
 						{
 							for (int yi = y - maxLength; yi < y + maxLength; yi++)

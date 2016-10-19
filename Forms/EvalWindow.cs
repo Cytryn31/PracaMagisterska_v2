@@ -55,7 +55,7 @@ namespace PracaMagisterska_v2.Forms
 		{
 			var ends = Check(MinutiaContainer.Instance.ReferenceMinutiaeList, MinutiaContainer.Instance.CalculatedMinutiaeList, MinutiaType.End);
 			var bis = Check(MinutiaContainer.Instance.ReferenceMinutiaeList, MinutiaContainer.Instance.CalculatedMinutiaeList, MinutiaType.Bifurcation);
-
+			customPictureBox1.Image = Form1.Instance.ReferencePictureBox.Image.Clone() as Image;
 			textBox5.Text = ends.Count().ToString();
 			textBox6.Text = bis.Count().ToString();
 			textBox7.Text = (ends.Count() + bis.Count()).ToString();

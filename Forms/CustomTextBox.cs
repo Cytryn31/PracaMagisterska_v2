@@ -6,7 +6,7 @@ namespace PracaMagisterska_v2.Forms
 {
 	class CustomTextBox: TextBox
 	{
-		bool allowSpace = false;
+		bool allowSpace = true;
 		public event EventHandler TextChanged;
 		public override string Text
 		{
@@ -52,7 +52,7 @@ namespace PracaMagisterska_v2.Forms
 			//    {
 			//     // Let the edit control handle control and alt key combinations
 			//    }
-			else if (this.allowSpace && e.KeyChar == ' ')
+			else  if (this.allowSpace && e.KeyChar == ' ')
 			{
 
 			}

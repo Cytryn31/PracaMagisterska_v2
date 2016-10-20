@@ -62,6 +62,9 @@ namespace PracaMagisterska_v2
 			this.button2 = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.label11 = new System.Windows.Forms.Label();
+			this.label10 = new System.Windows.Forms.Label();
 			this.textBox7 = new PracaMagisterska_v2.Forms.CustomTextBox();
 			this.textBox6 = new PracaMagisterska_v2.Forms.CustomTextBox();
 			this.textBox5 = new PracaMagisterska_v2.Forms.CustomTextBox();
@@ -73,10 +76,13 @@ namespace PracaMagisterska_v2
 			this.textBox1 = new PracaMagisterska_v2.Forms.CustomTextBox();
 			this.CalculatedPictureBox = new PracaMagisterska_v2.Forms.CustomPictureBox();
 			this.ReferencePictureBox = new PracaMagisterska_v2.Forms.CustomPictureBox();
+			this.customTextBox2 = new PracaMagisterska_v2.Forms.CustomTextBox();
+			this.customTextBox1 = new PracaMagisterska_v2.Forms.CustomTextBox();
 			this.Gabor.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.tabControl1.SuspendLayout();
+			this.tabPage1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CalculatedPictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ReferencePictureBox)).BeginInit();
 			this.SuspendLayout();
@@ -175,6 +181,7 @@ namespace PracaMagisterska_v2
 			this.comboBox1.Name = "comboBox1";
 			this.comboBox1.Size = new System.Drawing.Size(97, 21);
 			this.comboBox1.TabIndex = 26;
+			this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
 			// 
 			// panel2
 			// 
@@ -392,11 +399,44 @@ namespace PracaMagisterska_v2
 			// tabControl1
 			// 
 			this.tabControl1.Controls.Add(this.Gabor);
+			this.tabControl1.Controls.Add(this.tabPage1);
 			this.tabControl1.Location = new System.Drawing.Point(13, 13);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
 			this.tabControl1.Size = new System.Drawing.Size(1300, 755);
 			this.tabControl1.TabIndex = 4;
+			// 
+			// tabPage1
+			// 
+			this.tabPage1.Controls.Add(this.customTextBox2);
+			this.tabPage1.Controls.Add(this.customTextBox1);
+			this.tabPage1.Controls.Add(this.label11);
+			this.tabPage1.Controls.Add(this.label10);
+			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage1.Size = new System.Drawing.Size(1292, 729);
+			this.tabPage1.TabIndex = 2;
+			this.tabPage1.Text = "Filters Bank";
+			this.tabPage1.UseVisualStyleBackColor = true;
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(21, 56);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(65, 13);
+			this.label11.TabIndex = 2;
+			this.label11.Text = "Frequencies";
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(21, 19);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(85, 13);
+			this.label10.TabIndex = 1;
+			this.label10.Text = "Angles(Degrees)";
 			// 
 			// textBox7
 			// 
@@ -469,7 +509,7 @@ namespace PracaMagisterska_v2
 			this.textBox2.Name = "textBox2";
 			this.textBox2.Size = new System.Drawing.Size(100, 20);
 			this.textBox2.TabIndex = 11;
-			this.textBox2.Text = "15";
+			this.textBox2.Text = "16";
 			// 
 			// textBox1
 			// 
@@ -504,6 +544,24 @@ namespace PracaMagisterska_v2
 			this.ReferencePictureBox.ImageChanged += new System.EventHandler(this.refImageChanged_Event);
 			this.ReferencePictureBox.Click += new System.EventHandler(this.ReferencePictureBox_Click);
 			// 
+			// customTextBox2
+			// 
+			this.customTextBox2.AllowSpace = true;
+			this.customTextBox2.Location = new System.Drawing.Point(112, 52);
+			this.customTextBox2.Name = "customTextBox2";
+			this.customTextBox2.Size = new System.Drawing.Size(145, 20);
+			this.customTextBox2.TabIndex = 5;
+			this.customTextBox2.Text = "0,2 0,11 0,09";
+			// 
+			// customTextBox1
+			// 
+			this.customTextBox1.AllowSpace = true;
+			this.customTextBox1.Location = new System.Drawing.Point(112, 19);
+			this.customTextBox1.Name = "customTextBox1";
+			this.customTextBox1.Size = new System.Drawing.Size(145, 20);
+			this.customTextBox1.TabIndex = 4;
+			this.customTextBox1.Text = "0 15 60 95 135 170";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -520,6 +578,8 @@ namespace PracaMagisterska_v2
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.tabControl1.ResumeLayout(false);
+			this.tabPage1.ResumeLayout(false);
+			this.tabPage1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CalculatedPictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.ReferencePictureBox)).EndInit();
 			this.ResumeLayout(false);
@@ -568,6 +628,11 @@ namespace PracaMagisterska_v2
 		private CustomTextBox textBox3;
 		private CustomTextBox textBox2;
 		private CustomTextBox textBox1;
+		private TabPage tabPage1;
+		private Label label11;
+		private Label label10;
+		private CustomTextBox customTextBox2;
+		private CustomTextBox customTextBox1;
 	}
 }
 

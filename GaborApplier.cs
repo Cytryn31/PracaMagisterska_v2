@@ -10,6 +10,7 @@ namespace PracaMagisterska_v2
 {
 	public class GaborApplier
 	{
+
 		static int apply_kernel_at(ImageMatrix imageMatrix, double[,] kernel, int i, int j)
 		{
 			var result = 0.0;
@@ -143,9 +144,9 @@ namespace PracaMagisterska_v2
 		private static List<GaborFilter> BuildFilters(double gamma, double sigma, int ksize)
 		{
 			List<GaborFilter> kernels = new List<GaborFilter>();
-			for (int lambda = 5; lambda < 20; lambda += 5)
+			foreach (var lambda in Form1.Instance.Freqs)
 			{
-				for (double theta = 0; theta < 3.14; theta += Math.PI / 8)
+				foreach (var theta in Form1.Instance.Angles)
 				{
 					kernels.Add(new GaborFilter
 					{
@@ -164,34 +165,46 @@ namespace PracaMagisterska_v2
 		{
 			Dictionary<KeyValuePair<double, double>, double[,]> kernels =
 				new Dictionary<KeyValuePair<double, double>, double[,]>();
-			for (int lambda = 5; lambda < 20; lambda += 5)
+			foreach (var lambda in Form1.Instance.Freqs)
 			{
-				for (double theta = 0; theta < 3.14; theta += Math.PI / 8)
+				foreach (var theta in Form1.Instance.Angles)
 				{
 					var kernel = Gabor.Kernel2D(ksize, lambda, theta, 1, sigma, gamma, false);
-					kernels.Add(new KeyValuePair<double, double>(lambda,theta),kernel );
+					kernels.Add(new KeyValuePair<double, double>(lambda, theta),kernel );
 				}
 			}
 			return kernels;
 		}
 
-		private static double[,] FindKernel(double lamda, double angle, Dictionary<KeyValuePair<double, double>, double[,]> kernels)
+		private static double[,] FindKernel(double calculatedLambda, double angle, Dictionary<KeyValuePair<double, double>, double[,]> kernels)
 		{
 			var tmpLamda = 0.0;
 			var tmpAngle = 0.0;
-			var prevDifrencce = 0.0;
-
-			for (int lambda = 5; lambda < 20; lambda += 5)
+			var prevDifrencce = double.MaxValue;
+			var difrence = double.MaxValue;
+			var difrenceMin = double.MaxValue;
+			foreach (var lambda in Form1.Instance.Freqs)
 			{
-				if (lambda >= lamda)
-					tmpLamda = prevDifrencce > Math.Abs(lambda - lamda) ? lambda : lambda - 5;
-					prevDifrencce = Math.Abs(lambda - lamda);
+				difrence = Math.Abs(lambda - calculatedLambda);
+				if (difrence <= difrenceMin)
+				{
+					tmpLamda = lambda;
+					difrenceMin = difrence;
+				}
+				prevDifrencce = difrence;
 			}
-			for (double theta = 0; theta < 3.14; theta += Math.PI / 8)
+			difrence = double.MaxValue;
+			prevDifrencce = double.MaxValue;
+			difrenceMin = double.MaxValue;
+			foreach (var theta in Form1.Instance.Angles)
 			{
-				if (theta >= angle)
-					tmpAngle = prevDifrencce > Math.Abs(theta - angle) ? theta : theta - Math.PI / 8;
-				prevDifrencce = Math.Abs(theta - angle);
+				difrence = Math.Abs(theta - angle);
+				if (difrence <= difrenceMin)
+				{
+					tmpAngle = theta;
+					difrenceMin = difrence;
+				}
+				prevDifrencce = difrence;
 			}
 			return kernels[new KeyValuePair<double, double>(tmpLamda, tmpAngle)];
 		}

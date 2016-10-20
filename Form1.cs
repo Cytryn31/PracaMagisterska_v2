@@ -28,7 +28,35 @@ namespace PracaMagisterska_v2
 			[Description("BestResponse")]
 			BestResponse = 2
 		}
+
 		public static Form1 Instance;
+
+		public List<double> Angles
+		{
+			get
+			{
+				var list = customTextBox1.Text.Split(' ');
+				list = list.Where(p => !p.Equals(" ")).ToArray();
+				return list
+					.Select(l => ConvertToRadians(double.Parse(l)))
+					.ToList();
+			}
+		}
+		public double ConvertToRadians(double angle)
+		{
+			return (Math.PI / 180) * angle;
+		}
+		public List<double> Freqs
+		{
+			get
+			{
+				var list = customTextBox2.Text.Split(' ');
+				list = list.Where(p => !p.Equals(" ")).ToArray();
+				return list
+					.Select(l => Math.Pow(double.Parse(l), -1))
+					.ToList();
+			}
+		}
 
 		public Form1()
 		{
@@ -80,13 +108,14 @@ namespace PracaMagisterska_v2
 			if (textBox4.Text == null) return;
 			Bitmap input = new Bitmap((Image)ReferencePictureBox.Image.Clone());
 
-
-			if (comboBox1.Text.Equals("LHong"))
+			var win = int.Parse(textBox2.Text);
+			win = win % 2 + win;
+			if (comboBox1.Text.ToUpper().Equals("LHONG"))
 			{
 				var orientation = new HongOrientationEstimation();
 				var freq = new HongFrequencyEstimation();
-				orientation.BlockSize = Convert.ToByte(int.Parse(textBox2.Text));
-				freq.BlockSize = Convert.ToByte(int.Parse(textBox2.Text));
+				orientation.BlockSize = Convert.ToByte(win);
+				freq.BlockSize = Convert.ToByte(win);
 				var orientaions = orientation.ExtractFeatures(input);
 				var frequencies = freq.ExtractFeatures(input, orientaions);
 
@@ -103,12 +132,12 @@ namespace PracaMagisterska_v2
 			{
 				var orientation = new HongOrientationEstimation();
 				var freq = new HongFrequencyEstimation();
-				orientation.BlockSize = Convert.ToByte(int.Parse(textBox2.Text));
-				freq.BlockSize = Convert.ToByte(int.Parse(textBox2.Text));
+				orientation.BlockSize = Convert.ToByte(win);
+				freq.BlockSize = Convert.ToByte(win);
 				var orientaions = orientation.ExtractFeatures(input);
 				var frequencies = freq.ExtractFeatures(input, orientaions);
 
-				input = (Bitmap)GaborApplier.ApplyHong(input, orientaions, frequencies,
+				input = (Bitmap)GaborApplier.ApplyBank(input, orientaions, frequencies,
 					float.Parse(textBox4.Text), float.Parse(textBox3.Text), int.Parse(textBox1.Text));
 
 			}
@@ -374,7 +403,7 @@ namespace PracaMagisterska_v2
 						output = JsonConvert.SerializeObject(MinutiaContainer.Instance.ReferenceMinutiaeList);
 					}
 					File.WriteAllText(sfd.FileName, output);
-					
+
 				}
 			}
 			catch (Exception exception)
@@ -472,10 +501,22 @@ namespace PracaMagisterska_v2
 
 		private void button14_Click(object sender, EventArgs e)
 		{
-			if(ReferencePictureBox.Image == null || CalculatedPictureBox.Image == null) return;
-			
+			if (ReferencePictureBox.Image == null || CalculatedPictureBox.Image == null) return;
+
 			EvalWindow frmAbout = new EvalWindow();
 			frmAbout.ShowDialog();
+		}
+
+		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (comboBox1.Text.ToUpper().Equals("LHONG"))
+			{
+				tabPage1.Enabled = false;
+			}
+			else
+			{
+				tabPage1.Enabled = true;
+			}
 		}
 	}
 }
